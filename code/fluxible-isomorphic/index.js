@@ -5,13 +5,11 @@ import Good from 'good';
 import Path from 'path';
 import serialize from 'serialize-javascript';
 
-import HelloMessage from './components/HelloMessage';
 import HtmlComponent from './components/Html';
 const htmlComponent = React.createFactory(HtmlComponent);
 
-import MessageStore from './stores/MessageStore';
-
 import messageAction from './actions/messageAction';
+import app from './app';
 
 const server = new Hapi.Server();
 server.connection({port: 8080});
@@ -30,14 +28,10 @@ server.route({
     method: 'GET',
     path: '/',
     handler: (request, reply) => {
-        const app = new Fluxible({
-            component: HelloMessage,
-            stores: [MessageStore]
-        });
         // Bootstrap
         const context = app.createContext();
         context.executeAction(messageAction, 'Hello', err => {
-            const exposed = 'window.App=' + serialize(app.dehydrate(context)) + ';';
+            const exposed = 'window.dehydratedState=' + serialize(app.dehydrate(context)) + ';';
             const message = React.renderToString(context.createElement());
             const html = React.renderToStaticMarkup(htmlComponent({
                 context: context.getComponentContext(),
