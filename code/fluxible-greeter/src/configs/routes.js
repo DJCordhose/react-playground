@@ -1,16 +1,22 @@
+import loadGreetingAction from '../../actions/loadGreetingAction';
+
+import HomeControllerView from '../components/home/HomeControllerView';
+import GreetingControllerView from '../components/greeting/GreetingControllerView';
+
 export default {
     home: {
         path: '/',
         method: 'get',
         page: 'home',
         title: 'Home',
-        handler: require('../components/Home')
+        handler: HomeControllerView
     },
     about: {
-        path: '/about',
+        path: '/greeting/:id',
         method: 'get',
-        page: 'about',
-        title: 'About',
-        handler: require('../components/About')
+        page: 'greeting',
+        title: 'Greeting',
+        handler: GreetingControllerView,
+        action: loadGreetingAction
     }
 };

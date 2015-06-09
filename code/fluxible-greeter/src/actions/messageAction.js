@@ -1,4 +1,3 @@
-export default (actionContext, messagePayload) => {
-    actionContext.dispatch('MESSAGE_ACTION', messagePayload);
+export default (context, payload) => {
+    context.dispatch('MESSAGE_ACTION', payload);
 };
-

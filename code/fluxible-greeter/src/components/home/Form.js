@@ -4,9 +4,13 @@ export default class Form extends React.Component {
     focus() {
         React.findDOMNode(this.refs.in).focus();
     }
+    _handleSubmit(event) {
+        event.preventDefault(); // we do not want it to submit to server
+        this.props.submitHandler();
+    }
     render() {
         return (
-            <form method="get">
+            <form onSubmit={::this._handleSubmit}>
                 <div className="form-group">
                     <label htmlFor="greeting">Please enter your greeting</label>
                     <input ref="in"
@@ -18,7 +22,7 @@ export default class Form extends React.Component {
                         />
                 </div>
                 <a className="btn btn-default" onClick={this.props.resetHandler}>Clear</a>
-                <input type="submit" className="btn btn-success send" value="Send" />
+                <input type="submit" className="btn btn-success send" value="Send" disabled={!this.props.canSubmit} />
             </form>
         );
     }

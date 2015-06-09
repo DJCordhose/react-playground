@@ -38,9 +38,9 @@ var src = './src',
         useMemoryFs: true,
         progress: true
     },
-    CONFIG_FILENAME = webpackConfigPath;
+    CONFIG_FILENAME = webpack.config.CONFIG_FILENAME;
 
-gulp.task('webpack', [], function() {
+gulp.task('webpack', ['clean'], function() {
     return gulp.src(path.join(src, '**', CONFIG_FILENAME), { base: path.resolve(src) })
         .pipe(webpack.init(webpackConfig))
         .pipe(webpack.props(webpackOptions))
@@ -56,7 +56,7 @@ gulp.task('webpack', [], function() {
         .pipe(gulp.dest(dest));
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', ['clean'], function() {
     gulp.watch(path.join(src, '**/*.*')).on('change', function(event) {
         if (event.type === 'changed') {
             gulp.src(event.path, { base: path.resolve(src) })

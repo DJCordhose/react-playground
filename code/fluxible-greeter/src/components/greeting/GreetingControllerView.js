@@ -1,7 +1,7 @@
 import React from 'react';
 import Form from './Form';
 
-export default class GreetingControllerView extends React.Component {
+class GreetingControllerView extends React.Component {
     render() {
         return (
             <div className="container-fluid">
@@ -16,3 +16,9 @@ export default class GreetingControllerView extends React.Component {
         );
     }
 }
+
+export default provideContext(connectToStores(GreetingControllerView, [MessageStore], (stores) => {
+    return {
+        greeting: stores.MessageStore.message
+    };
+}));

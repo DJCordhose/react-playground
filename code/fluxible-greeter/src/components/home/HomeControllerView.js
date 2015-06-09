@@ -6,6 +6,7 @@ import Preview from './Preview';
 
 import MessageStore from '../../stores/MessageStore';
 import messageAction from '../../actions/messageAction';
+import saveAction from '../../actions/saveAction';
 
 class HomeControllerView extends React.Component {
     static get contextTypes() {
@@ -24,6 +25,11 @@ class HomeControllerView extends React.Component {
         this._sendGreeting(event.target.value);
     }
 
+    saveGreeting() {
+        const greeting = this.context.getStore(MessageStore).message;
+        this.context.executeAction(saveAction, greeting);
+    }
+
     _sendGreeting(greeting) {
         this.context.executeAction(messageAction, greeting);
     }
@@ -36,7 +42,10 @@ class HomeControllerView extends React.Component {
                         <Form ref="inputForm"
                               greeting={this.props.greeting}
                               resetHandler={::this.reset}
-                              updateHandler={::this.updateModel} />
+                              updateHandler={::this.updateModel}
+                              submitHandler={::this.saveGreeting}
+                              canSubmit={this.props.greeting && this.props.greeting.length > 0}
+                            />
                     </div>
                 </div>
                 <div className="row">
