@@ -11,6 +11,8 @@ const htmlComponent = React.createFactory(HtmlComponent);
 import messageAction from './actions/messageAction';
 import app from './app';
 
+import persistenceService from './services/persistenceService';
+
 const server = new Hapi.Server();
 server.connection({port: 8080});
 
@@ -45,6 +47,21 @@ server.route({
     }
 });
 
+// curl -X POST -H "Content-Type: application/json" -d '{"greeting": "Test of API"}' http://localhost:8080/api/greeting
+
+server.route({
+    method: 'POST',
+    path: '/api/greeting',
+    handler: (request, reply) => {
+        const greeting = request.payload.greeting;
+        console.log(`Storing greeting: ${greeting}`);
+        persistenceService.save(greeting, (err, greetingObj) => {
+            const id = greetingObj._id;
+            const response = reply(id);
+            response.type('application/json');
+        });
+    }
+});
 server.register({
     register: Good,
     options: {

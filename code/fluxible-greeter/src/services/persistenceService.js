@@ -1,7 +1,6 @@
-const mongoose = require('mongoose');
-// store url in external dependency and exclude remote one (containing password) from git
+import mongoose from 'mongoose';
 //const url = require('./remote-mongo-url');
-const url = require('./local-mongo-url');
+import url from './local-mongo-url';
 mongoose.connect(url);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -21,7 +20,7 @@ function load(id, callback) {
     Greeting.find({_id: id}, callback);
 }
 
-module.exports = {
+export default {
     save,
     load
 };
