@@ -2,7 +2,7 @@ module.exports = {
     resolve: {
         extensions: ['', '.js', '.jsx']
     },
-    entry: './client.js',
+    entry: './src/client.js',
     output: {
         path: './build/js',
         publicPath: '/public/js/',
@@ -11,7 +11,6 @@ module.exports = {
     module: {
         loaders: [
             { test: /\.css$/, loader: 'style!css' },
-            //{ test: /\.js$/, exclude: /node_modules/, loader: require.resolve('babel-loader') },
             {
                 test: /\.js$/, exclude: /node_modules/, loader: 'babel',
                 query: {
