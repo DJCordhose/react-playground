@@ -1,0 +1,8 @@
+{
+  "name": "fluxible-greeter",
+  "dependencies": {
+    "fetch": "*",
+    "es6-promise": "*"
+  }
+
+}

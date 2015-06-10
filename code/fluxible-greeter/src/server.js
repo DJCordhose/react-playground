@@ -22,7 +22,7 @@ server.route({
     path: '/public/{param*}',
     handler: {
         directory: {
-            path: 'build'
+            path: 'public'
         }
     }
 });
@@ -99,7 +99,6 @@ server.route({
             }
         }
     }
-
 });
 
 server.register({
