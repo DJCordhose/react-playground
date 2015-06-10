@@ -10,6 +10,7 @@
     "good": "*",
     "good-console": "*",
     "hapi": "*",
+    "joi": "*",
     "mongodb": "*",
     "mongoose": "*",
     "babel": "^5.4.7",

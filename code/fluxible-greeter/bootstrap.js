@@ -2,4 +2,4 @@ require('babel/register')({
     stage: 0
 });
 
-module.exports = require('./src/index');
+module.exports = require('./src/server');

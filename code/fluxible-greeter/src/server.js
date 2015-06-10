@@ -1,6 +1,7 @@
 import Fluxible from 'fluxible';
 import React from 'react';
 import Hapi from 'hapi';
+import Joi from 'joi';
 import Good from 'good';
 import Path from 'path';
 import serialize from 'serialize-javascript';
@@ -60,8 +61,47 @@ server.route({
             const response = reply(id);
             response.type('application/json');
         });
+    },
+    config: {
+        validate: {
+            payload: {
+                greeting: Joi.string().min(1)
+            }
+        }
     }
 });
+
+// curl http://localhost:8080/api/greeting/{id}
+// e.g.
+// curl http://localhost:8080/api/greeting/55772814229fc020bf443272
+
+server.route({
+    method: 'GET',
+    path: '/api/greeting/{id}',
+    handler: (request, reply) => {
+        const id = request.params.id;
+        persistenceService.load(id, (err, greetingObjs) => {
+            if (greetingObjs && greetingObjs.length) {
+                const greetingObj = greetingObjs[0];
+                const greeting = greetingObj.greeting;
+                const response = reply(greeting);
+                response.type('application/json');
+            } else {
+                const response = reply(`Invalid id ${id}`);
+                response.code(404);
+            }
+        });
+    },
+    config: {
+        validate: {
+            params: {
+                id: Joi.string().min(1)
+            }
+        }
+    }
+
+});
+
 server.register({
     register: Good,
     options: {
