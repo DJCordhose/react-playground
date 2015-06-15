@@ -37,7 +37,7 @@ class HelloMessage extends React.Component {
                        onChange={this.updateModel.bind(this)}
                        value={this.props.greeting}/>
                 <MessageDisplay message={this.props.greeting + ', World'}/>
-                <ResetButton resetHandler={this.reset.bind(this)} />
+                <ResetButton resetHandler={::this.reset} />
             </div>);
     }
 }
