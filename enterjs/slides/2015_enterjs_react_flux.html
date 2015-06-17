@@ -107,12 +107,12 @@ und Diskussionen mit React-Kernentwicklern.
         <section>
             <h2>What are React and Flux?</h2>
             <ul>
-                <li class="fragment">React is a "JavaScript libarary for building user interfaces"
-                <li class="fragment">Facebook and Instagram have been built using React
-                <li class="fragment">Flux is an architecture for React developed and used by Facebook
-                <li class="fragment">Objective is to make applications maintainable and easy to understand
-                <li class="fragment">Ideas found in Flux can not only be applied to React Web Applications
-                <li class="fragment">Companies using React and a Flux-architecture include Facebook, Yahoo, and Netflix
+                <li>React is a "JavaScript libarary for building user interfaces"
+                <li>Facebook and Instagram have been built using React
+                <li>Flux is an architecture for React developed and used by Facebook
+                <li>Objective is to make applications maintainable and easy to understand
+                <li>Ideas found in Flux can not only be applied to React Web Applications
+                <li>Companies using React and a Flux-architecture include Dow Jones, Facebook, Yahoo, and Netflix
             </ul>
         </section>
         <!-- Time including questions: 45 minutes -->
@@ -121,17 +121,17 @@ und Diskussionen mit React-Kernentwicklern.
             <h2>Contents</h2>
             <ol>
                 <!-- 5 minutes -->
-                <li class="fragment">Frontend Architecture: Why?
+                <li>Frontend Architecture: Why?
                 <!-- 5 minutes -->
-                <li class="fragment">React in a nut shell
+                <li>React in a nut shell
                 <!-- 10 minutes -->
-                <li class="fragment">Introduction to the core ideas of Flux
+                <li>Introduction to the core ideas of Flux
                 <!-- 10 minutes -->
-                <li class="fragment">A Sample Implementation: Yahoo's Fluxible
+                <li>A Sample Implementation: Yahoo's Fluxible
                 <!-- 5 minutes -->
-                <li class="fragment">FAQ
+                <li>FAQ
                 <!-- 5 minutes -->
-                <li class="fragment">Questions and discussion
+                <li>Questions and discussion
             </ol>
         </section>
 
@@ -143,10 +143,12 @@ und Diskussionen mit React-Kernentwicklern.
         <h3>Classic Server Side Rendering (Blue: Server, Violet: Browser)</h3>
         <ul>
             <img src="Classic%20Web%20Application.png" class="right-img">
-            <li class="fragment">Classic Web Application
-            <li class="fragment">each interaction triggers a new request and rendering on the server
-            <li class="fragment">All business logic on Server
-            <li class="fragment">Optionally some client side tweaks using JavaScript
+            <div class="fragment">
+                <li>Classic Web Application
+                <li>each interaction triggers a new request and rendering on the server
+                <li>All business logic on Server
+                <li>Optionally some client side tweaks using JavaScript
+            </div>
         </ul>
         <p><small>Copyright 2015, Oliver Zeigermann</small></p>
     </section>
@@ -155,10 +157,12 @@ und Diskussionen mit React-Kernentwicklern.
         <h3>SPA: Sample Scenario for high need of good architecture</h3>
         <ul>
             <img src="SPA%20Web%20Client.jpg" class="right-img">
-            <li class="fragment">Single Page Application
-            <li class="fragment">a single HTML pages gets loaded containing all HTML and JavaScript
-            <li class="fragment">Rendering entirely in Browser
-            <li class="fragment">Business logic in browser allows for offline support
+            <div class="fragment">
+                <li>Single Page Application
+                <li>a single HTML pages gets loaded containing all HTML and JavaScript
+                <li>Rendering entirely in Browser
+                <li>Business logic in browser allows for offline support
+            </div>
         </ul>
         <p><small>Copyright 2015, Oliver Zeigermann</small></p>
     </section>
@@ -167,19 +171,19 @@ und Diskussionen mit React-Kernentwicklern.
             <ul>
                 <li class="fragment">Even when frontend does not live as long as the backend
                     <ul>
-                        <li class="fragment">you still spend more time reading the code than writing it
+                        <li>you still spend more time reading the code than writing it
                     </ul>
                 </li>
                 <li class="fragment">your aim should be to have the code as clear and easy to understand as possible, because
                     <ul>
-                        <li class="fragment">velocity still degrades when people have a hard time understanding the code
-                        <li class="fragment">bug fixing and enhancements are easier when you can clearly tell which part of the code affects what part of the application
+                        <li>velocity still degrades when people have a hard time understanding the code
+                        <li>bug fixing and enhancements are easier when you can clearly tell which part of the code affects what part of the application
                     </ul>
                 </li>
                 <li class="fragment">your code should follow a common architectural understanding, because
                     <ul>
-                        <li class="fragment">onboarding of new people still is easier if the application is clearly structured
-                        <li class="fragment">shared code-ownership is easier if every module has the same design
+                        <li>onboarding of new people still is easier if the application is clearly structured
+                        <li>shared code-ownership is easier if every module has the same design
                     </ul>
                 </li>
             </ul>
@@ -189,22 +193,22 @@ und Diskussionen mit React-Kernentwicklern.
             <ul>
                 <li class="fragment">Not as much experience with frontend architecture as with backend
                     <ul>
-                        <li class="fragment">Traditionally, frontend code has not been engineered with maintainability in mind
-                        <li class="fragment">Data and control flow in frontend does not play well with layers
+                        <li>Traditionally, frontend code has not been engineered with maintainability in mind
+                        <li>Data and control flow in frontend does not play well with layers
                     </ul>
                 </li>
                 <li class="fragment">All code is loaded into the browser at runtime
                     <ul>
-                        <li class="fragment">How do you structure that code to keep it maintainable?
-                        <li class="fragment">How do the components of the system play together in the browser?
-                        <li class="fragment">Initialization phases become much more complex
+                        <li>How do you structure that code to keep it maintainable?
+                        <li>How do the components of the system play together in the browser?
+                        <li>Initialization phases become much more complex
                     </ul>
                 </li>
                 <li class="fragment">All rendering and interaction is done in the browser
                     <ul>
-                        <li class="fragment">How do you render in the browser in the first place?
-                        <li class="fragment">How do you make it fast enough?
-                        <li class="fragment">Communication with server requires asynchronous code
+                        <li>How do you render in the browser in the first place?
+                        <li>How do you make it fast enough?
+                        <li>Communication with server requires asynchronous code
                     </ul>
                 </li>
             </ul>
@@ -216,36 +220,21 @@ und Diskussionen mit React-Kernentwicklern.
     <section>
         <section>
             <h2>2. React in a nut shell</h2>
-        </section>
-        <section>
-            <h2>React</h2>
             <img src="http://facebook.github.io/react/img/logo_small.png">
 
             <p><a target="_blank" href="http://facebook.github.io/react/">http://facebook.github.io/react/</a></p>
 
             <p><a target="_blank" href="https://github.com/facebook/react">https://github.com/facebook/react</a></p>
         </section>
-        <!--<section>-->
-            <!--<h2>Why React?</h2>-->
-            <!--<p class="fragment">We built React to solve one problem: building large applications with data that changes over time.</p>-->
-            <!--<p class="fragment">Simply express how your app should look at any given point in time, and React will automatically manage-->
-                <!--all UI updates</p>-->
-            <!--<p class="fragment">When the data changes, React conceptually hits the "refresh" button, and knows to only update the changed parts.</p>-->
-            <!--<a class="fragment" target="_blank" href="http://facebook.github.io/react/docs/why-react.html">http://facebook.github.io/react/docs/why-react.html</a>-->
-        <!--</section>-->
-
         <section>
             <h2>Core Concepts</h2>
             <ul>
-                <li class="fragment">Based on components, holding both view and logic
-                <li class="fragment">Templates can be written in pure JavaScript or using the JSX template language
-                <li class="fragment">Reactive one-way data-binding: Changes to state will be rendered automatically
-                <li class="fragment">Smart diffing algorithm computes the changes between old and new virtual DOM
-                <li class="fragment">Browser DOM experiences minimal amount of updates
-                <li class="fragment">Can render both on server and on client side
-                <li class="fragment">Server side rendering also for SEO or quick first page impression
-                <li class="fragment">ES6 (next JavaScript version) syntax recommended and supported
-                <li class="fragment">Needs tool to translate ES6 and JSX to standard ES5
+                <li>Based on components, holding both view and logic
+                <li>Reactive one-way data-binding: Changes to state will be rendered automatically
+                <li>Templates can be written in pure JavaScript or using the JSX template language
+                <li>Can render both on server and on client side
+                <li>ES6 (next JavaScript version) syntax recommended and supported
+                <li>Babel to translate ES6 and JSX to standard ES5
             </ul>
         </section>
 
@@ -272,7 +261,7 @@ und Diskussionen mit React-Kernentwicklern.
 }
 var mountNode = document.getElementById('example');
 React.render(&lt;HelloMessage greeting="Hello" />, mountNode);</code></pre>
-                <a target="_blank" href="../framework-comparison/react/index.html">Run</a>
+                <a target="_blank" href="../../code/react-hello-world/index.html">Run</a>
         </section>
 
 </section>
@@ -309,7 +298,7 @@ React.render(&lt;HelloMessage greeting="Hello" />, mountNode);</code></pre>
                 <li class="fragment">All stores register to dispatcher
                 <li class="fragment">Can synchronize actions
                     <ul>
-                        <li class="fragment">to allow at most no active action per time
+                        <li class="fragment">to allow at most one active action per time
                         <li class="fragment">might be necessary to still understand application
                     </ul>
                 </li>
@@ -325,10 +314,11 @@ React.render(&lt;HelloMessage greeting="Hello" />, mountNode);</code></pre>
         <section>
             <h3>Actions</h3>
             <ul>
-                <li class="fragment">Contains at least a symbol of what is the intention of the action
+                <li class="fragment">Contain at least a symbol of what is the intention of the action
                 <li class="fragment">Can be as basic as a pure string
                 <li class="fragment">Often contains some payload
                 <li class="fragment">Can also be implemented as a function or an object
+                <li class="fragment">Can contain logic and also server communication
             </ul>
         </section>
 
@@ -441,7 +431,7 @@ React.render(&lt;HelloMessage greeting="Hello" />, mountNode);</code></pre>
         </section>
 
         <section>
-            <h3>Step 1: Removing component state with properties</h3>
+            <h3>Step 1: Replacing component state with properties</h3>
 <pre><code class="html" contenteditable>class HelloMessage extends React.Component {
     render() {
         return (<div>
@@ -457,14 +447,15 @@ React.render(&lt;HelloMessage greeting="Hello" />, mountNode);</code></pre>
     }
     reset() {
         // What do we do here???
-        this.setState({greeting: ""});
+        // this.setState({greeting: ""});
     }
 }
 </code></pre>
         </section>
         <section>
             <h3>Step 2: Sending actions to change state</h3>
-<pre><code class="html" contenteditable>const messageAction = (actionContext, messagePayload) => {
+<pre><code class="html" contenteditable>// close to what is called action creator in Flux notation
+const messageAction = (actionContext, messagePayload) => {
     actionContext.dispatch('MESSAGE_ACTION', messagePayload);
 }
 </code></pre>
@@ -549,6 +540,11 @@ const getStateFromStores = (stores) => {
             </section>
 
         <section>
+            <h2>Live Sample</h2>
+            <a target="_blank" href="../../code/fluxible-client-enterjs/index.html">Run</a>
+        </section>
+
+        <section>
             <h3>Routing</h3>
             <ul>
                 <li class="fragment">Provides a mapping from path/method to component (nothing too fancy)
@@ -574,6 +570,9 @@ const getStateFromStores = (stores) => {
                 </li>
                 <li class="fragment"><a target="_blank" href="http://fluxible.io/api/bringing-flux-to-the-server.html">
                     Bringing Flux to the server
+                </a>
+                <li class="fragment"><a target="_blank" href="../../code/fluxible-isomorphic">
+                    Sample Code (start using `npm dev`)
                 </a>
             </ul>
         </section>
