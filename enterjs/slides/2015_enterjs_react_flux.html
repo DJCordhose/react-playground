@@ -561,19 +561,21 @@ const getStateFromStores = (stores) => {
             <ul>
                 <li class="fragment">React allows to render component on server (into HTML) and on client (into DOM)
                 <li class="fragment">SEO possible by rendering pages on server using same components
-                <li class="fragment">Fast first page impression is a more challenging
+                <li class="fragment">Fast first page impression is more challenging
                     <ul>
                         <li class="fragment">requires rendering on server and making it interactive on client
                         <li class="fragment">React has a mechanism to attach listener on client side only (no unnecessary re-rendering)
                         <li class="fragment">Transferring state of stores works via serialization and rendering into HTML as well (Dehydration/Rehydration)
+                        <li class="fragment">Subsequent actions or route changes are a bigger challenge
                     </ul>
                 </li>
                 <li class="fragment"><a target="_blank" href="http://fluxible.io/api/bringing-flux-to-the-server.html">
                     Bringing Flux to the server
                 </a>
-                <li class="fragment"><a target="_blank" href="../../code/fluxible-isomorphic">
+                <li class="fragment"><a target="_blank" href="https://github.com/DJCordhose/react-playground/tree/gh-pages/code/fluxible-isomorphic">
                     Sample Code (start using `npm dev`)
                 </a>
+                <li class="fragment"><a target="_blank" href="http://localhost:8080">Run</a>
             </ul>
         </section>
 
