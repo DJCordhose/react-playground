@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>React and Flux</title>
+
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+    <link rel="stylesheet" href="../reveal.js/css/reveal.min.css">
+    <!--<link rel="stylesheet" href="../reveal.js/css/theme/simple.css" id="theme">-->
+    <!--<link rel="stylesheet" href="../reveal.js/css/theme/sky.css" id="theme">-->
+    <!--<link rel="stylesheet" href="../reveal.js/css/theme/moon.css" id="theme">-->
+    <link rel="stylesheet" href="../reveal.js/css/theme/night.css" id="theme">
+
+    <!-- Uncomment for presentation -->
+    <style>
+        pre code {
+            display: block;
+            padding: 0.5em;
+            background: #FFFFFF;
+            color: #000000;
+        }
+        .right-img {
+            margin-left: 10px !important;
+            float: right;
+            height: 500px;
+        }
+    </style>
+
+    <!-- Uncomment for PDF generation -->
+    <!-- and add ?print-pdf to url -->
+    <!--<link rel="stylesheet" href="../reveal.js/css/print/pdf.css">-->
+    <!--<link rel="stylesheet" href="../reveal.js/lib/css/zenburn.css">-->
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+        document.write('<link rel="stylesheet" href="../reveal.js/css/print/' + ( window.location.search.match(/print-pdf/gi) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">');
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="../reveal.js/lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<!--
+Plan
+- React native?
+- Yahoos Flux-Implementierung mit Router als Beispiel nehmen
+- Yahoos Flux Auf Server: http://fluxible.io/guides/bringing-flux-to-the-server.html
+
+Native Links
+- https://twitter.com/Vjeux/status/570247867014598657?s=03 (https://www.facebook.com/business/news/ads-manager-app)
+- http://jlongster.com/First-Impressions-using-React-Native
+
+-->
+
+<div class="reveal">
+
+    <!-- Any section element inside of this container is displayed as a slide -->
+    <div class="slides">
+
+        <!--
+        Title: Flux - Architektur für React
+Abstract: Mit React hat Facebook eine großartige View-Technologie
+entwickelt. Sie ist simpel, schnell und universell einsetzbar. Es
+stellt sich dabei allerdings die Frage, wie man den Rest seiner
+Anwendung um diese View-Technologie herum implementiert. Facebook hat
+dafür das Flux-Architekturkonzept entwickelt. Yahoo ist auf diesen Zug
+aufgesprungen und hat daraus mit Fluxible gleich ein kleines Framework
+gebaut. In diesem Vortrag möchte ich die Ideen dieser Architektur
+anhand von praktischen Beispielen erläutern. Der Vortrag basiert unter
+anderem auf praktischen Erfahrungen aus unterschiedlichen Projekten
+und Diskussionen mit React-Kernentwicklern.
+-->
+        <section>
+            <h1>Introduction to React and Flux</h1>
+
+            <p>
+                <small><a href="http://zeigermann.eu">Oliver Zeigermann</a> / <a href="http://twitter.com/djcordhose">@DJCordhose</a>
+                </small>
+            </p>
+            <p>Online version at: <a href="http://bit.ly/1AS7bQz">http://bit.ly/1AS7bQz</a></p>
+        </section>
+
+        <section>
+            <h2>What are React and Flux?</h2>
+            <ul>
+                <li>React is a "JavaScript libarary for building user interfaces"
+                <li>Facebook and Instagram have been built using React
+                <li>Flux is an architecture for React developed and used by Facebook
+                <li>Objective is to make applications maintainable and easy to understand
+                <li>Ideas found in Flux can not only be applied to React Web Applications
+                <li>Companies using React and a Flux-architecture include Dow Jones, Facebook, Yahoo, and Netflix
+            </ul>
+        </section>
+        <section>
+            <h2>2. React in a nut shell</h2>
+            <img src="http://facebook.github.io/react/img/logo_small.png">
+
+            <p><a target="_blank" href="http://facebook.github.io/react/">http://facebook.github.io/react/</a></p>
+
+            <p><a target="_blank" href="https://github.com/facebook/react">https://github.com/facebook/react</a></p>
+        </section>
+        <section>
+            <h2>Core Concepts</h2>
+            <ul>
+                <li>Based on components, holding both view and logic
+                <li>Reactive one-way data-binding: Changes to state will be rendered automatically
+                <li>Templates can be written in pure JavaScript or using the JSX template language
+                <li>Can render both on server and on client side
+                <li>ES6 (next JavaScript version) syntax recommended and supported
+                <li>Babel to translate ES6 and JSX to standard ES5
+            </ul>
+        </section>
+
+        <section>
+            <h3>Hello World React</h3>
+<pre><code class="html" contenteditable>class HelloMessage extends React.Component {
+    render() {
+        return (<div>
+            <input value={this.state.greeting} onChange={this.updateModel} />
+            <p>{this.state.greeting}, World</p>
+            <input type="button" value="Clear" onClick={this.reset} />
+        </div>);
+    }
+    constructor(props) {
+        super(props);
+        this.state = {greeting: this.props.greeting};
+        this.updateModel = this.updateModel.bind(this);
+        this.reset = this.reset.bind(this);
+    }
+    updateModel(event) {
+        this.setState({greeting: event.target.value});
+    }
+    reset() {
+        this.setState({greeting: ""});
+    }
+}</code></pre>
+                <a target="_blank" href="../code/react-hello-world/index.html">Run</a>
+        </section>
+
+        <section>
+            <h2>Flux - An Architecture (not only) for React</h2>
+            <ul>
+                <li>Not a framework, but a set of architectural ideas
+                <li>Born at Facebook to bring structure into their complex application
+                <li>Core idea is a unidirectional flow of control
+                <li>Objectives of architecture
+                    <ul>
+                        <li>Suitable for interactive applications (not only in the browser)
+                        <li>Guideline how to structure your complete application when it grows
+                        <li>Make clear how data and control flow through the system
+                        <li>What depends on what? What uses what?
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>Overview</h3>
+            <img src="flux/flux-simple-f8-diagram-explained-1300w.png">
+            <p><small>Copyright 2015, Facebook, <a target="_blank" href="//facebook.github.io/flux/docs/overview.html">http://facebook.github.io/flux/docs/overview.html</a></small></p>
+        </section>
+
+        <section>
+            <h2>A Sample Implementation: Yahoo's Fluxible</h2>
+            <ul>
+                <li><a target="_blank" href="http://fluxible.io/">Fluxible: Flux @Yahoo</a>
+                <li>Flux concept turned into a framework
+                <li>Adds a router component
+                <li>Buzz word: <em>isomorphic JavaScript</em>: can render on server and on client using the same code
+                <li>Works very well with ES6, Babel translator, Gulp and Webpack
+            </ul>
+        </section>
+        <section>
+            <h3>Step 1: Replacing component state with properties</h3>
+<pre><code class="html" contenteditable>class HelloMessage extends React.Component {
+    render() {
+        return (<div>
+            // `this.state.greeting` turns `this.props.greeting`
+            <input value={this.props.greeting} onChange={this.updateModel} />
+            <p>{this.props.greeting}, World</p>
+            <input type="button" value="Clear" onClick={this.reset} />
+        </div>);
+    }
+    updateModel(event) {
+        // What do we do here???
+        // this.setState({greeting: event.target.value});
+    }
+    reset() {
+        // What do we do here???
+        // this.setState({greeting: ""});
+    }
+}
+</code></pre>
+        </section>
+        <section>
+            <h3>Step 2: Sending actions to change state</h3>
+<pre><code class="html" contenteditable>// close to what is called action creator in Flux notation
+const messageAction = (actionContext, messagePayload) => {
+    actionContext.dispatch('MESSAGE_ACTION', messagePayload);
+}
+</code></pre>
+<pre><code class="html" contenteditable>class HelloMessage extends React.Component {
+    render() {
+      // unchanged
+    }
+    reset() {
+        this.context.executeAction(messageAction, '');
+    }
+    updateModel(event) {
+        this.context.executeAction(messageAction, event.target.value);
+    }
+}
+</code></pre>
+        </section>
+        <section>
+            <h3>Step 3: Handling actions in Store</h3>
+<pre><code class="html" contenteditable>class MessageStore extends BaseStore {
+    static get storeName() {
+        return 'MessageStore';
+    }
+    static get handlers() {
+        return {
+            'MESSAGE_ACTION': 'handleMessage'
+        };
+    }
+    handleMessage(payload) {
+        this._message = payload;
+        this.emitChange();
+    }
+    get message() {
+        return this._message;
+    }
+}
+</code></pre>
+            </section>
+        <section>
+            <h3>Step 4: Connecting View to Store</h3>
+<pre><code class="html" contenteditable>// causes a re-rendering of component `HelloMessage`
+// when one of the stores calls `this.emitChange()`
+connectToStores(HelloMessage, [MessageStore], getStateFromStores);
+</code></pre>
+<pre class="fragment"><code class="html" contenteditable>// will be called to create props passed used for re-rendering
+const getStateFromStores = (stores) => {
+    return {
+        greeting: stores.MessageStore.message
+    };
+});</code></pre>
+            </section>
+
+        <section>
+            <h3>Step 5: Controller View with Child Views</h3>
+<pre><code class="html" contenteditable>class HelloMessage extends React.Component {
+    render() {
+        return (
+          <div>
+            <input value={this.props.greeting} onChange={this.updateModel} />
+            // child views
+            &lt;MessageDisplay message={this.props.greeting + ', World'}/>
+            &lt;ResetButton resetHandler={this.reset} />
+          </div>);
+    // rest unchanged
+}</code></pre>
+
+<pre class="fragment"><code class="html" contenteditable>class MessageDisplay extends React.Component {
+    render() {
+        return <p>{this.props.message}</p>;
+    }
+}
+</code></pre>
+<pre class="fragment"><code class="html" contenteditable>class ResetButton extends React.Component {
+    render() {
+        return (
+            <button
+                onClick={this.props.resetHandler}>Clear
+            </button>
+        );
+    }
+}
+</code></pre>
+            </section>
+
+        <section>
+            <h2>Live Sample</h2>
+            <a target="_blank" href="../code/fluxible-client-enterjs/index.html">Run</a>
+        </section>
+
+    <section>
+            <h1>Thank you!</h1>
+
+            <h3>Questions / Discussion</h3>
+
+            <p>
+                <small><a href="http://zeigermann.eu">Oliver Zeigermann</a> / <a href="http://twitter.com/djcordhose">@DJCordhose</a>
+                </small>
+            </p>
+        <a href="http://www.embarc.de/"><img src="http://www.embarc.de/wp-content/uploads/2014/01/embarc13.png" height="150"></a>
+    </section>
+    </div>
+
+</div>
+
+<script src="../reveal.js/lib/js/head.min.js"></script>
+<script src="../reveal.js/js/reveal.min.js"></script>
+
+<script>
+
+    // Full list of configuration options available here:
+    // https://github.com/hakimel/../reveal.js#configuration
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+        // Optional libraries used to extend on ../reveal.js
+        dependencies: [
+            { src: '../reveal.js/lib/js/classList.js', condition: function () {
+                return !document.body.classList;
+            } },
+            { src: '../reveal.js/plugin/markdown/showdown.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            } },
+            { src: '../reveal.js/plugin/markdown/markdown.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            } },
+            { src: '../reveal.js/plugin/highlight/highlight.js', async: true, callback: function () {
+                hljs.initHighlightingOnLoad();
+            } },
+            { src: '../reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function () {
+                return !!document.body.classList;
+            } },
+            { src: '../reveal.js/plugin/notes/notes.js', async: true, condition: function () {
+                return !!document.body.classList;
+            } }
+            // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+    });
+
+</script>
+
+</body>
+</html>
