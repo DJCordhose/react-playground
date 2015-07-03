@@ -63,19 +63,6 @@ Native Links
     <!-- Any section element inside of this container is displayed as a slide -->
     <div class="slides">
 
-        <!--
-        Title: Flux - Architektur für React
-Abstract: Mit React hat Facebook eine großartige View-Technologie
-entwickelt. Sie ist simpel, schnell und universell einsetzbar. Es
-stellt sich dabei allerdings die Frage, wie man den Rest seiner
-Anwendung um diese View-Technologie herum implementiert. Facebook hat
-dafür das Flux-Architekturkonzept entwickelt. Yahoo ist auf diesen Zug
-aufgesprungen und hat daraus mit Fluxible gleich ein kleines Framework
-gebaut. In diesem Vortrag möchte ich die Ideen dieser Architektur
-anhand von praktischen Beispielen erläutern. Der Vortrag basiert unter
-anderem auf praktischen Erfahrungen aus unterschiedlichen Projekten
-und Diskussionen mit React-Kernentwicklern.
--->
         <section>
             <h1>Introduction to React and Flux</h1>
 
@@ -109,11 +96,12 @@ und Diskussionen mit React-Kernentwicklern.
             <h2>Core Concepts</h2>
             <ul>
                 <li>Based on components, holding both view and logic
-                <li>Reactive one-way data-binding: Changes to state will be rendered automatically
-                <li>Templates can be written in pure JavaScript or using the JSX template language
-                <li>Can render both on server and on client side
-                <li>ES6 (next JavaScript version) syntax recommended and supported
-                <li>Babel to translate ES6 and JSX to standard ES5
+                <li>No template language, just JavaScript (syntactic sugar via JSX possible)
+                <li>State is turned into representation using composed components
+                <li>State is explicitly held and manipulated
+                <li>User interaction may change state
+                <li>State changes cause an <em>efficient</em> rerender of the <em>whole</em> application
+                <li>Makes no assumption about how model, routing, and server communication works
             </ul>
         </section>
 
