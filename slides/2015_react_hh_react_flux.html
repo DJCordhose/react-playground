@@ -64,7 +64,7 @@ Native Links
     <div class="slides">
 
         <section>
-            <h1>Introduction to React and Flux</h1>
+            <h1>React</h1>
 
             <p>
                 <small><a href="http://zeigermann.eu">Oliver Zeigermann</a> / <a href="http://twitter.com/djcordhose">@DJCordhose</a>
@@ -74,34 +74,43 @@ Native Links
         </section>
 
         <section>
-            <h2>What are React and Flux?</h2>
+            <h2>React ...</h2>
             <ul>
-                <li>React is a "JavaScript libarary for building user interfaces"
-                <li>Facebook and Instagram have been built using React
-                <li>Flux is an architecture for React developed and used by Facebook
-                <li>Objective is to make applications maintainable and easy to understand
-                <li>Ideas found in Flux can not only be applied to React Web Applications
-                <li>Companies using React and a Flux-architecture include Dow Jones, Facebook, Yahoo, and Netflix
+                <li>is
+                    <ul class="fragment">
+                        <li>JavaScript library for building user interfaces
+                    </ul>
+                </li>
+                <li>has
+                    <ul class="fragment">
+                        <li>implementations for Web and Native
+                    </ul>
+                </li>
+                <li>is not
+                    <ul class="fragment">
+                        <li>a complete framework
+                        <li>opinionated about anything outside of it
+                    </ul>
+                </li>
+                <li>makes no assumptions about
+                    <ul class="fragment">
+                        <li>routing
+                        <li>model
+                        <li>server communication
+                        <li>more high level architectural ideas
+                    </ul>
+                </li>
             </ul>
-        </section>
-        <section>
-            <h2>2. React in a nut shell</h2>
-            <img src="http://facebook.github.io/react/img/logo_small.png">
-
-            <p><a target="_blank" href="http://facebook.github.io/react/">http://facebook.github.io/react/</a></p>
-
-            <p><a target="_blank" href="https://github.com/facebook/react">https://github.com/facebook/react</a></p>
         </section>
         <section>
             <h2>Core Concepts</h2>
             <ul>
                 <li>Based on components, holding both view and logic
                 <li>No template language, just JavaScript (syntactic sugar via JSX possible)
-                <li>State is turned into representation using composed components
                 <li>State is explicitly held and manipulated
+                <li>State is turned into representation using composed components
                 <li>User interaction may change state
-                <li>State changes cause an <em>efficient</em> rerender of the <em>whole</em> application
-                <li>Makes no assumption about how model, routing, and server communication works
+                <li>State changes cause an <em>efficient</em> re-render of a <em>whole</em> component tree
             </ul>
         </section>
 
@@ -137,14 +146,6 @@ Native Links
                 <li>Not a framework, but a set of architectural ideas
                 <li>Born at Facebook to bring structure into their complex application
                 <li>Core idea is a unidirectional flow of control
-                <li>Objectives of architecture
-                    <ul>
-                        <li>Suitable for interactive applications (not only in the browser)
-                        <li>Guideline how to structure your complete application when it grows
-                        <li>Make clear how data and control flow through the system
-                        <li>What depends on what? What uses what?
-                    </ul>
-                </li>
             </ul>
         </section>
 
