@@ -119,25 +119,29 @@ Native Links
 <pre><code class="html" contenteditable>class HelloMessage extends React.Component {
     render() {
         return (<div>
-            <input value={this.state.greeting} onChange={this.updateModel} />
+            &lt;input value={this.state.greeting} onChange={this.updateModel} />
             <p>{this.state.greeting}, World</p>
-            <input type="button" value="Clear" onClick={this.reset} />
+            &lt;input type="button" value="Clear" onClick={this.reset} />
         </div>);
     }
-    constructor(props) {
-        super(props);
-        this.state = {greeting: this.props.greeting};
-        this.updateModel = this.updateModel.bind(this);
-        this.reset = this.reset.bind(this);
-    }
-    updateModel(event) {
+    // ...
+}</code></pre>
+<pre class="fragment"><code class="html" contenteditable>    updateModel(event) {
         this.setState({greeting: event.target.value});
     }
     reset() {
         this.setState({greeting: ""});
-    }
-}</code></pre>
-                <a target="_blank" href="../code/react-hello-world/index.html">Run</a>
+    }</code></pre>
+
+<pre class="fragment"><code class="html" contenteditable>var mountNode = document.getElementById('example');
+React.render(&lt;HelloMessage greeting="Hello" />, mountNode);</code></pre>
+
+<pre class="fragment"><code class="html" contenteditable>    constructor(props) {
+        super(props);
+        this.state = {greeting: this.props.greeting};
+    }</code></pre>
+
+            <a target="_blank" href="../code/react-hello-world/index.html">Run</a>
         </section>
 
         <section>
@@ -146,6 +150,14 @@ Native Links
                 <li>Not a framework, but a set of architectural ideas
                 <li>Born at Facebook to bring structure into their complex application
                 <li>Core idea is a unidirectional flow of control
+                <li>Objectives of architecture
+                    <ul>
+                        <li>Suitable for interactive applications (not only in the browser)
+                        <li>Guideline how to structure your complete application when it grows
+                        <li>Make clear how data and control flow through the system
+                        <li>What depends on what? What uses what?
+                    </ul>
+                </li>
             </ul>
         </section>
 
@@ -156,128 +168,133 @@ Native Links
         </section>
 
         <section>
-            <h2>A Sample Implementation: Yahoo's Fluxible</h2>
-            <ul>
-                <li><a target="_blank" href="http://fluxible.io/">Fluxible: Flux @Yahoo</a>
-                <li>Flux concept turned into a framework
-                <li>Adds a router component
-                <li>Buzz word: <em>isomorphic JavaScript</em>: can render on server and on client using the same code
-                <li>Works very well with ES6, Babel translator, Gulp and Webpack
-            </ul>
+            <h3>Redux in a single screen</h3>
+            <img src="redux-overview.png">
+            <p><small><a target="_blank" href="https://github.com/gaearon/react-redux">https://github.com/gaearon/react-redux</a>, <a target="_blank" href="https://twitter.com/erikthedev_/status/620951888326856704">Copyright 2015, @erikthedev_</a></small></p>
         </section>
-        <section>
-            <h3>Step 1: Replacing component state with properties</h3>
-<pre><code class="html" contenteditable>class HelloMessage extends React.Component {
-    render() {
-        return (<div>
-            // `this.state.greeting` turns `this.props.greeting`
-            <input value={this.props.greeting} onChange={this.updateModel} />
-            <p>{this.props.greeting}, World</p>
-            <input type="button" value="Clear" onClick={this.reset} />
-        </div>);
-    }
-    updateModel(event) {
-        // What do we do here???
-        // this.setState({greeting: event.target.value});
-    }
-    reset() {
-        // What do we do here???
-        // this.setState({greeting: ""});
-    }
-}
-</code></pre>
-        </section>
-        <section>
-            <h3>Step 2: Sending actions to change state</h3>
-<pre><code class="html" contenteditable>// close to what is called action creator in Flux notation
-const messageAction = (actionContext, messagePayload) => {
-    actionContext.dispatch('MESSAGE_ACTION', messagePayload);
-}
-</code></pre>
-<pre><code class="html" contenteditable>class HelloMessage extends React.Component {
-    render() {
-      // unchanged
-    }
-    reset() {
-        this.context.executeAction(messageAction, '');
-    }
-    updateModel(event) {
-        this.context.executeAction(messageAction, event.target.value);
-    }
-}
-</code></pre>
-        </section>
-        <section>
-            <h3>Step 3: Handling actions in Store</h3>
-<pre><code class="html" contenteditable>class MessageStore extends BaseStore {
-    static get storeName() {
-        return 'MessageStore';
-    }
-    static get handlers() {
-        return {
-            'MESSAGE_ACTION': 'handleMessage'
-        };
-    }
-    handleMessage(payload) {
-        this._message = payload;
-        this.emitChange();
-    }
-    get message() {
-        return this._message;
-    }
-}
-</code></pre>
-            </section>
-        <section>
-            <h3>Step 4: Connecting View to Store</h3>
-<pre><code class="html" contenteditable>// causes a re-rendering of component `HelloMessage`
-// when one of the stores calls `this.emitChange()`
-connectToStores(HelloMessage, [MessageStore], getStateFromStores);
-</code></pre>
-<pre class="fragment"><code class="html" contenteditable>// will be called to create props passed used for re-rendering
-const getStateFromStores = (stores) => {
-    return {
-        greeting: stores.MessageStore.message
-    };
-});</code></pre>
-            </section>
+        <!--<section>-->
+            <!--<h2>Another Sample Implementation: Yahoo's Fluxible</h2>-->
+            <!--<ul>-->
+                <!--<li><a target="_blank" href="http://fluxible.io/">Fluxible: Flux @Yahoo</a>-->
+                <!--<li>Flux concept turned into a framework-->
+                <!--<li>Adds a router component-->
+                <!--<li>Buzz word: <em>isomorphic JavaScript</em>: can render on server and on client using the same code-->
+                <!--<li>Works very well with ES6, Babel translator, Gulp and Webpack-->
+            <!--</ul>-->
+        <!--</section>-->
+        <!--<section>-->
+            <!--<h3>Step 1: Replacing component state with properties</h3>-->
+<!--<pre><code class="html" contenteditable>class HelloMessage extends React.Component {-->
+    <!--render() {-->
+        <!--return (<div>-->
+            <!--// `this.state.greeting` turns `this.props.greeting`-->
+            <!--<input value={this.props.greeting} onChange={this.updateModel} />-->
+            <!--<p>{this.props.greeting}, World</p>-->
+            <!--<input type="button" value="Clear" onClick={this.reset} />-->
+        <!--</div>);-->
+    <!--}-->
+    <!--updateModel(event) {-->
+        <!--// What do we do here???-->
+        <!--// this.setState({greeting: event.target.value});-->
+    <!--}-->
+    <!--reset() {-->
+        <!--// What do we do here???-->
+        <!--// this.setState({greeting: ""});-->
+    <!--}-->
+<!--}-->
+<!--</code></pre>-->
+        <!--</section>-->
+        <!--<section>-->
+            <!--<h3>Step 2: Sending actions to change state</h3>-->
+<!--<pre><code class="html" contenteditable>// close to what is called action creator in Flux notation-->
+<!--const messageAction = (actionContext, messagePayload) => {-->
+    <!--actionContext.dispatch('MESSAGE_ACTION', messagePayload);-->
+<!--}-->
+<!--</code></pre>-->
+<!--<pre><code class="html" contenteditable>class HelloMessage extends React.Component {-->
+    <!--render() {-->
+      <!--// unchanged-->
+    <!--}-->
+    <!--reset() {-->
+        <!--this.context.executeAction(messageAction, '');-->
+    <!--}-->
+    <!--updateModel(event) {-->
+        <!--this.context.executeAction(messageAction, event.target.value);-->
+    <!--}-->
+<!--}-->
+<!--</code></pre>-->
+        <!--</section>-->
+        <!--<section>-->
+            <!--<h3>Step 3: Handling actions in Store</h3>-->
+<!--<pre><code class="html" contenteditable>class MessageStore extends BaseStore {-->
+    <!--static get storeName() {-->
+        <!--return 'MessageStore';-->
+    <!--}-->
+    <!--static get handlers() {-->
+        <!--return {-->
+            <!--'MESSAGE_ACTION': 'handleMessage'-->
+        <!--};-->
+    <!--}-->
+    <!--handleMessage(payload) {-->
+        <!--this._message = payload;-->
+        <!--this.emitChange();-->
+    <!--}-->
+    <!--get message() {-->
+        <!--return this._message;-->
+    <!--}-->
+<!--}-->
+<!--</code></pre>-->
+            <!--</section>-->
+        <!--<section>-->
+            <!--<h3>Step 4: Connecting View to Store</h3>-->
+<!--<pre><code class="html" contenteditable>// causes a re-rendering of component `HelloMessage`-->
+<!--// when one of the stores calls `this.emitChange()`-->
+<!--connectToStores(HelloMessage, [MessageStore], getStateFromStores);-->
+<!--</code></pre>-->
+<!--<pre class="fragment"><code class="html" contenteditable>// will be called to create props passed used for re-rendering-->
+<!--const getStateFromStores = (stores) => {-->
+    <!--return {-->
+        <!--greeting: stores.MessageStore.message-->
+    <!--};-->
+<!--});</code></pre>-->
+            <!--</section>-->
 
-        <section>
-            <h3>Step 5: Controller View with Child Views</h3>
-<pre><code class="html" contenteditable>class HelloMessage extends React.Component {
-    render() {
-        return (
-          <div>
-            <input value={this.props.greeting} onChange={this.updateModel} />
-            // child views
-            &lt;MessageDisplay message={this.props.greeting + ', World'}/>
-            &lt;ResetButton resetHandler={this.reset} />
-          </div>);
-    // rest unchanged
-}</code></pre>
+        <!--<section>-->
+            <!--<h3>Step 5: Controller View with Child Views</h3>-->
+<!--<pre><code class="html" contenteditable>class HelloMessage extends React.Component {-->
+    <!--render() {-->
+        <!--return (-->
+          <!--<div>-->
+            <!--<input value={this.props.greeting} onChange={this.updateModel} />-->
+            <!--// child views-->
+            <!--&lt;MessageDisplay message={this.props.greeting + ', World'}/>-->
+            <!--&lt;ResetButton resetHandler={this.reset} />-->
+          <!--</div>);-->
+    <!--// rest unchanged-->
+<!--}</code></pre>-->
 
-<pre class="fragment"><code class="html" contenteditable>class MessageDisplay extends React.Component {
-    render() {
-        return <p>{this.props.message}</p>;
-    }
-}
-</code></pre>
-<pre class="fragment"><code class="html" contenteditable>class ResetButton extends React.Component {
-    render() {
-        return (
-            <button
-                onClick={this.props.resetHandler}>Clear
-            </button>
-        );
-    }
-}
-</code></pre>
-            </section>
+<!--<pre class="fragment"><code class="html" contenteditable>class MessageDisplay extends React.Component {-->
+    <!--render() {-->
+        <!--return <p>{this.props.message}</p>;-->
+    <!--}-->
+<!--}-->
+<!--</code></pre>-->
+<!--<pre class="fragment"><code class="html" contenteditable>class ResetButton extends React.Component {-->
+    <!--render() {-->
+        <!--return (-->
+            <!--<button-->
+                <!--onClick={this.props.resetHandler}>Clear-->
+            <!--</button>-->
+        <!--);-->
+    <!--}-->
+<!--}-->
+<!--</code></pre>-->
+            <!--</section>-->
 
-        <section>
-            <h2>Live Sample</h2>
-            <a target="_blank" href="../code/fluxible-client-enterjs/index.html">Run</a>
-        </section>
+        <!--<section>-->
+            <!--<h2>Live Sample</h2>-->
+            <!--<a target="_blank" href="../code/fluxible-client-enterjs/index.html">Run</a>-->
+        <!--</section>-->
 
     <section>
             <h1>Thank you!</h1>
